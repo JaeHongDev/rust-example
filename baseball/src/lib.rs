@@ -26,8 +26,39 @@ pub fn str_to_baseball_num(input: &str) -> Vec<u32> {
 }
 
 
+pub mod score {
+    #[derive(Debug)]
+    pub struct Score {
+        ball: i64,
+        strike: i64,
+    }
+
+    impl Score {
+        pub fn add_ball(&mut self) {
+            self.ball += 1;
+        }
+        pub fn add_strike(&mut self) {
+            self.strike +=1;
+        }
+
+        pub fn init() -> Score {
+            Score {
+                ball: 0,
+                strike: 0,
+            }
+        }
+    }
+
+
+}
+
+
+
+
+
 #[cfg(test)]
 mod tests {
+    use crate::score::{Score};
     use super::*;
 
     #[test]
@@ -106,4 +137,25 @@ mod tests {
         println!("{:?}", r);
 
     }
+
+    #[test]
+    fn 벡터_비교_구조체버전() {
+        let v1: Vec<i64> = (1..=3).collect();
+        let v2: Vec<i64> = (1..=3).collect();
+
+        let mut score = Score::init();
+
+        for (v1_index, v1_item) in v1.iter().enumerate() {
+            for(v2_index, v2_item) in v2.iter().enumerate() {
+                match (v1_item == v2_item, v1_index == v2_index) {
+                    (true, true) => score.add_strike(),
+                    (true, false)  => score.add_ball(),
+                    _ => ()
+                }
+            }
+        }
+
+        println!("{:?}", score);
+    }
+
 }
