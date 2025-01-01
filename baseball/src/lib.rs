@@ -4,6 +4,12 @@ pub fn add(left: usize, right: usize) -> usize {
     left + right
 }
 
+pub fn add_tuple((l1, l2) : (i64, i64), (r1, r2):(i64, i64)) -> (i64, i64) {
+    println!("{:?}, {:?}", (l1, l2), (r1,r2));
+
+    (l1 + r1, l2 + r2)
+}
+
 
 pub fn str_to_baseball_num(input: &str) -> Vec<u32> {
     let vec: Vec<u32> = str::chars(input).map(|c| c.to_digit(10))
@@ -49,5 +55,55 @@ mod tests {
         let input = "2124";
 
         str_to_baseball_num(input);
+    }
+
+    #[test]
+    fn 백터를_비교함(){
+        let v1: Vec<i64> = (1..=3).collect();
+        let v2: Vec<i64> = (1..=3).collect();
+        // let v2 : Vec<i64> = (3..=5).collect();
+
+        println!("{:?}", v1);
+        println!("{:?}", v2);
+
+        let mut ball = 0;
+        let mut strike = 0;
+
+        for (v1_index, v1_item) in v1.iter().enumerate() {
+            for(v2_index, v2_item) in v2.iter().enumerate() {
+                match (v1_item == v2_item, v1_index == v2_index) {
+                    (true, false) => ball   += 1,
+                    (true, true)  => strike += 1,
+                    _ => ()
+                }
+            }
+        }
+
+        println!("{} {}", strike, ball);
+    }
+
+    #[test]
+    fn 함수형_스타일로_벡터를_비교함(){
+        let v1: Vec<i64> = (1..=3).collect();
+        let v2: Vec<i64> = (2..=4).collect();
+
+        println!("{:?} {:?}", v1, v2);
+
+        let r: (i64, i64) =v1.iter()
+            .enumerate()
+            .fold((0,0), |
+                acc,
+                (index, item)|
+                add_tuple(acc, v2.iter()
+                    .enumerate()
+                    .fold((0, 0), |(strike, ball), (other_index, other_item)| match (item == other_item, index == other_index) {
+                        (true, true) => (strike + 1, ball),
+                        (true, false) => (strike, ball + 1),
+                        _ => (strike, ball)
+                    }))
+            );
+
+        println!("{:?}", r);
+
     }
 }
