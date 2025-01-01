@@ -34,6 +34,7 @@ pub mod score {
     }
 
     impl Score {
+
         pub fn add_ball(&mut self) {
             self.ball += 1;
         }
@@ -41,12 +42,31 @@ pub mod score {
             self.strike +=1;
         }
 
-        pub fn init() -> Score {
+        pub fn sum(&self, score: Score) -> Score {
             Score {
-                ball: 0,
-                strike: 0,
+                ball: self.ball + score.ball,
+                strike: self.strike + score.strike
             }
         }
+
+        pub fn strike(&self) -> Score {
+            Score {
+                ball: self.ball,
+                strike: self.strike + 1
+            }
+        }
+
+        pub fn ball(&self) -> Score {
+            Score {
+                ball: self.ball + 1,
+                strike: self.strike + 1
+            }
+        }
+
+        pub fn init() -> Self {
+            Self { ball: 0, strike: 0 }
+        }
+
     }
 
 
@@ -156,6 +176,26 @@ mod tests {
         }
 
         println!("{:?}", score);
+    }
+
+    #[test]
+    fn 함수형_스타일_백터_비교_구조체_버전(){
+        let v1: Vec<i64> = (1..=3).collect();
+        let v2: Vec<i64> = (1..=3).collect();
+
+
+        let score = v1.iter()
+            .enumerate()
+            .fold(Score::init(), |score, (index,item)| score.sum(v2.iter()
+                .enumerate()
+                .fold(Score::init(), |score, (other_index, other_item)| match (item == other_item, index == other_index) {
+                    (true, true) => score.strike(),
+                    (true, false) => score.ball(),
+                    _ => score
+                })));
+
+        println!("{:?}", score)
+
     }
 
 }
