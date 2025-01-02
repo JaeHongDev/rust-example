@@ -1,9 +1,13 @@
 mod domain;
+mod view;
+
 
 use std::io::{stdin, stdout, Write};
+use view::game_view;
 
 fn main() {
     println!("숫자 야구 게임을 시작합니다.");
+
 
     let input = read_line("숫지를 입력해주세요 : ");
     println!("{}", input);

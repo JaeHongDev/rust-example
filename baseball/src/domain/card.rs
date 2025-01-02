@@ -19,10 +19,8 @@ impl Card {
     }
 
     fn validate_card_value(value: i8) {
-        value
-            .ge(&1)
-            .le(&9)
-            .not()
-            .then(|| panic!("card의 값은 1~9사이의 숫자로 구성해야 합니다."));
+        if (1..=9).contains(&value).not() {
+            panic!("card의 값은 1~9사이의 숫자로 구성해야 합니다.");
+        }
     }
 }

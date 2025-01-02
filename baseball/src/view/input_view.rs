@@ -8,7 +8,9 @@ pub trait Input {
 pub struct ConsoleInputView;
 
 impl Input for ConsoleInputView {
+
     fn read_number(option: Option<&str>) -> i64 {
+
         print(option);
         read_line().parse().expect("숫자 이외의 값이 입력됐습니다.")
     }
