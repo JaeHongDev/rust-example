@@ -1,3 +1,5 @@
+mod domain;
+
 use std::ops::Not;
 
 pub fn add(left: usize, right: usize) -> usize {
