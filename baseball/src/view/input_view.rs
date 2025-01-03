@@ -1,21 +1,25 @@
 use std::io::{stdin, stdout, Write};
 
 pub trait Input {
-    fn read_number(option: Option<&str>) -> i64;
-    fn read_line(option: Option<&str>) -> String;
+    fn read_number(&self, option: Option<&str>) -> i64;
+    fn read_line(&self, option: Option<&str>) -> String;
 }
 
 pub struct ConsoleInputView;
 
+impl ConsoleInputView {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
+
 impl Input for ConsoleInputView {
-
-    fn read_number(option: Option<&str>) -> i64 {
-
+    fn read_number(&self, option: Option<&str>) -> i64 {
         print(option);
         read_line().parse().expect("숫자 이외의 값이 입력됐습니다.")
     }
 
-    fn read_line(option: Option<&str>) -> String {
+    fn read_line(&self, option: Option<&str>) -> String {
         print(option);
         read_line()
     }
