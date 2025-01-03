@@ -1,7 +1,8 @@
 use crate::domain::card::Card;
 
+#[derive(Debug)]
 pub struct Computer {
-    cards: Vec<Card>,
+    pub cards: Vec<Card>,
 }
 
 impl Computer {
