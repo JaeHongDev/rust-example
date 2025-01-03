@@ -1,23 +1,17 @@
-
 pub trait Output {
-    
-    fn println(msg: &str);
+    fn println(&self, msg: &str);
 }
-
 
 pub struct ConsoleOutputView {}
 
-impl Output for ConsoleOutputView { 
+impl ConsoleOutputView {
+    pub fn new() -> Self {
+        Self {}
+    }
+}
 
-    fn println(msg: &str) {
+impl Output for ConsoleOutputView {
+    fn println(&self, msg: &str) {
         println!("{}", msg);
     }
-    
 }
-
-pub fn from() -> impl Output {
-    ConsoleOutputView {}
-}
-
-
-
