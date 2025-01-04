@@ -25,11 +25,11 @@ impl Card {
         }
     }
 
-    pub fn compare(&self, other: Card) -> Count {
+    pub fn compare(&self, other: &Card) -> Count {
         match (self.value == other.value, self.value == other.value) {
             (true, true) => Count::STRIKE,
             (true, false) => Count::BALL,
-            (_) => Count::BALL,
+            (_) => Count::NO,
         }
     }
 }
@@ -37,4 +37,6 @@ impl Card {
 pub enum Count {
     STRIKE,
     BALL,
+    NO
+
 }

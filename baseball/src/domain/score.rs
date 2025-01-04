@@ -1,6 +1,7 @@
+#[derive(Debug)]
 pub struct Score {
-    ball: i32,
-    strike: i32,
+    pub ball: i32,
+    pub strike: i32,
 }
 
 impl Score {
@@ -11,7 +12,7 @@ impl Score {
     pub fn strike(&self) -> Self {
         Self {
             ball: self.ball,
-            strike: self.strike,
+            strike: self.strike + 1,
         }
     }
 

@@ -1,4 +1,5 @@
 mod domain;
+mod study;
 
 use std::ops::Not;
 
@@ -191,5 +192,25 @@ mod tests {
             });
 
         println!("{:?}", score)
+    }
+
+
+    #[test]
+    fn 패턴매칭_테스트(){
+
+        let v= [
+            (0, 0),
+            (0, 1), (0, 2), (0, 3),
+            (1, 0), (1, 1), (1, 2),
+            (2, 0), (2, 1), (3, 0)
+        ];
+
+        v.iter().for_each(|(strike, ball)| println!("{}", match (strike, ball) {
+            (0, 0) => String::from("낫싱"),
+            (_, 0) => format!("{} 스트라이크", strike),
+            (0, _) => format!("{} 볼", ball),
+            _ => format!("{} 스트라이크 {} 볼", strike, ball)
+        }));
+
     }
 }
