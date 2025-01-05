@@ -17,10 +17,6 @@ fn main() {
 
     game_controller.game_init();
     game_controller.play();
-
-
-
-
 }
 
 
