@@ -3,7 +3,29 @@ use std::net::{TcpListener, TcpStream};
 use std::thread;
 
 
-const contents: &str = r#"
+pub struct ThreadPool {}
+impl ThreadPool {
+    pub fn new (size: usize) -> ThreadPool {
+        Self
+    }
+
+
+    pub fn new(size: usize) -> ThreadPool {
+        assert!(size > 0);
+
+        ThreadPool
+    }
+
+    pub fn execute<F>(&self, f: F)
+    where
+        F: FnOnce() + Send + 'static,
+    {
+    }
+    pub fn build(size: usize) -> Result<ThreadPool, PoolCreationError> {}
+}
+
+
+const CONTENTS: &str = r#"
 <!DOCTYPE html>
 <html lang="en">
   <head>
@@ -18,6 +40,8 @@ const contents: &str = r#"
 "#;
 
 
+
+
 fn handle_client(mut stream: TcpStream) {
 
     let buf_reader = BufReader::new(&mut stream);
@@ -29,15 +53,12 @@ fn handle_client(mut stream: TcpStream) {
 
     println!("{:#?}", http_request);
 
-    let response = "HTTP/1.1 200 OK\r\n\r\n";
-
-
 
     let status_line = "HTTP/1.1 200 OK";
-    let length = contents.len();
+    let length = CONTENTS.len();
 
     let response =
-        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{contents}");
+        format!("{status_line}\r\nContent-Length: {length}\r\n\r\n{CONTENTS}");
 
     stream.write_all(response.as_bytes()).unwrap();
 }
